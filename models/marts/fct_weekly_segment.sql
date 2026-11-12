@@ -23,6 +23,7 @@ select
     sum(od.timed_trips)                             as timed_trips,
     sum(od.timed_miles)                             as timed_miles,
     sum(od.timed_minutes)                           as timed_minutes,
+    sum(case when w.baseline_miles is not null then od.timed_miles end)                            as covered_miles,
     sum(case when od.timed_miles > 0 then w.baseline_miles end)                                    as mix_weight,
     sum(case when od.timed_miles > 0 then w.baseline_miles * od.timed_minutes / od.timed_miles end) as mix_weighted_pace
 from od

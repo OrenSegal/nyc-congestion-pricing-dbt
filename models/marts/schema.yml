@@ -18,6 +18,8 @@ models:
                 values: ['before', 'transition', 'after']
       - name: trips
         data_tests: [not_null]
+      - name: covered_miles
+        description: Timed miles in cells that have a baseline weight. Divide by timed_miles for how much of the traffic the mix-adjusted speed covers.
       - name: mix_weight
         description: Sum of baseline weights of the cells that had timed trips this week.
       - name: mix_weighted_pace

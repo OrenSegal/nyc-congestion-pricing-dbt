@@ -75,7 +75,7 @@ def with_retry(fn):
     for attempt in range(6):
         try:
             return fn()
-        except duckdb.HTTPException as e:
+        except duckdb.Error as e:
             if attempt == 5:
                 raise
             print(f"server refused ({str(e)[:60]}...), waiting 10 min", flush=True)

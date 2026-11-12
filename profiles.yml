@@ -1,6 +1,6 @@
-# `dev` runs locally on DuckDB and reads data/raw/*.parquet (made by scripts/extract.py).
+# `dev` runs locally on DuckDB and reads data/landing/*.parquet (made by scripts/extract.py).
 # `bq` runs on BigQuery (sandbox tier works) after the parquet files are loaded into
-# a table; see README. Set GCP_PROJECT and run `gcloud auth application-default login`.
+# a table tlc_raw.weekly_od; see README. Set GCP_PROJECT and run `gcloud auth application-default login`.
 nyc_congestion_pricing:
   target: dev
   outputs:
