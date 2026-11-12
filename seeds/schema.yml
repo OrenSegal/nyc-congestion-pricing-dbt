@@ -1,0 +1,26 @@
+version: 2
+seeds:
+  - name: taxi_zones
+    description: TLC taxi zone lookup, as published by the TLC.
+    columns:
+      - name: locationid
+        data_tests: [unique, not_null]
+  - name: cbd_zones
+    description: >
+      Taxi zones inside or next to the congestion relief zone, derived from the fee data by
+      scripts/derive_cbd_zones.py. share_charged is the share of March 2025 yellow taxi trips
+      starting and ending in the zone that paid the fee.
+    columns:
+      - name: zone_id
+        data_tests:
+          - unique
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('taxi_zones')
+                field: locationid
+      - name: zone_role
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['inside', 'adjacent']

@@ -1,0 +1,43 @@
+version: 2
+models:
+  - name: stg_tlc__weekly_od
+    description: One row per service, week, peak/overnight period and pickup-dropoff zone pair.
+    columns:
+      - name: service
+        description: yellow_taxi or uber_lyft (all high-volume for-hire companies).
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['yellow_taxi', 'uber_lyft']
+      - name: week_start
+        description: Monday the week starts on.
+        data_tests: [not_null]
+      - name: pickup_zone_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_taxi_zones')
+                field: zone_id
+      - name: dropoff_zone_id
+        data_tests:
+          - relationships:
+              arguments:
+                to: ref('stg_taxi_zones')
+                field: zone_id
+      - name: trips
+        data_tests: [not_null]
+  - name: stg_taxi_zones
+    description: TLC taxi zones with their role in the study.
+    columns:
+      - name: zone_id
+        data_tests: [unique, not_null]
+      - name: zone_role
+        description: >
+          inside_zone (in the congestion relief zone), adjacent_to_zone (just north of 60th St;
+          some trips there get charged because the route dips into the zone), manhattan_other,
+          rest_of_city, or excluded (unknown zones and Newark Airport).
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['inside_zone', 'adjacent_to_zone', 'manhattan_other', 'rest_of_city', 'excluded']

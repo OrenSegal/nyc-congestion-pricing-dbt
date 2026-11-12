@@ -1,0 +1,7 @@
+file,pulled_on,trips_in_month
+yellow_tripdata_2022-10.parquet,2026-11-12,3675320
+yellow_tripdata_2022-11.parquet,2026-11-12,3252620
+yellow_tripdata_2022-12.parquet,2026-11-12,3399503
+yellow_tripdata_2023-01.parquet,2026-11-12,3066718
+yellow_tripdata_2023-02.parquet,2026-11-12,2913900
+yellow_tripdata_2023-03.parquet,2026-11-12,3403577

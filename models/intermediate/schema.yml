@@ -1,0 +1,26 @@
+version: 2
+models:
+  - name: int_od_weekly
+    description: Weekly zone-pair rows with segment, season and aligned week. Not yet limited to the comparison window.
+    columns:
+      - name: season
+        description: October-June season, named by the year it starts (2024 = Oct 2024 to Jun 2025).
+      - name: aligned_week
+        description: The week moved onto the 2024-25 calendar by whole 364-day years, so the same value means "the same week" in every season.
+      - name: segment
+        description: >
+          inside_zone (both ends in the toll zone), crossing_zone (one end in it),
+          manhattan_outside_zone (touches Manhattan but neither end is in the zone),
+          rest_of_city (neither end in Manhattan; the comparison group), excluded
+          (unknown zone or Newark Airport).
+        data_tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['inside_zone', 'crossing_zone', 'manhattan_outside_zone', 'rest_of_city', 'excluded']
+  - name: int_cell_baseline_weights
+    description: Baseline-season weight for each service / zone pair / period cell with enough trips.
+    columns:
+      - name: baseline_miles
+        description: Miles carried by the cell in the baseline season; used as its fixed weight.
+        data_tests: [not_null]

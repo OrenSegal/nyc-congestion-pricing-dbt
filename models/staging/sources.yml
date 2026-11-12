@@ -1,0 +1,40 @@
+version: 2
+sources:
+  - name: tlc
+    description: >
+      NYC Taxi & Limousine Commission trip records (yellow taxis and high-volume for-hire
+      vehicles, i.e. Uber and Lyft), landed by scripts/extract.py as weekly counts per
+      pickup zone, dropoff zone and peak/overnight period. One file per service-month,
+      October to June of 2022-23 through 2025-26.
+    schema: "{{ 'main' if target.type == 'duckdb' else env_var('BQ_RAW_DATASET', 'tlc_raw') }}"
+    tables:
+      - name: weekly_od
+        meta:
+          external_location: "read_parquet('{{ var('landing_glob') }}')"
+        columns:
+          - name: service
+            description: yellow or fhvhv (high-volume for-hire vehicles).
+            data_tests:
+              - not_null
+              - accepted_values:
+                  arguments:
+                    values: ['yellow', 'fhvhv']
+          - name: week_start
+            description: Monday of the pickup week. A week that spans two months appears in two files.
+            data_tests: [not_null]
+          - name: is_peak
+            description: Pickup fell in the toll's peak hours (5am-9pm weekdays, 9am-9pm weekends).
+            data_tests: [not_null]
+          - name: pu_zone_id
+            data_tests: [not_null]
+          - name: do_zone_id
+            data_tests: [not_null]
+          - name: trips
+            description: All trips.
+            data_tests: [not_null]
+          - name: fee_trips
+            description: Trips charged the congestion fee (always 0 before the column existed).
+          - name: timed_trips
+            description: Trips with plausible duration (1-180 min), distance (0.1-100 mi) and speed (under 80 mph).
+          - name: timed_miles
+          - name: timed_minutes

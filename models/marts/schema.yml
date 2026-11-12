@@ -1,0 +1,31 @@
+version: 2
+models:
+  - name: fct_weekly_segment
+    description: >
+      Weekly trips and speed inputs per season, segment, service and peak/overnight period,
+      limited to the weeks every season covers. Input to experiment/analyze.py.
+    columns:
+      - name: season
+        data_tests: [not_null]
+      - name: aligned_week
+        description: Week on the shared 2024-25 calendar.
+        data_tests: [not_null]
+      - name: period
+        description: before / transition / after, by the calendar position of the toll start (5 Jan). Applies to every season so placebo seasons use the same split.
+        data_tests:
+          - accepted_values:
+              arguments:
+                values: ['before', 'transition', 'after']
+      - name: trips
+        data_tests: [not_null]
+      - name: mix_weight
+        description: Sum of baseline weights of the cells that had timed trips this week.
+      - name: mix_weighted_pace
+        description: Sum of weight x minutes-per-mile over those cells. Divide by mix_weight for the mix-adjusted pace.
+  - name: agg_season_segment
+    description: Season-level summary per segment and period. Convenience table for a quick look; the analysis uses the weekly fact.
+    columns:
+      - name: mix_adjusted_mph
+        description: Speed with the trip mix held at the baseline season's.
+      - name: share_charged_fee
+        description: Share of trips charged the congestion fee. Zero before the toll.

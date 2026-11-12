@@ -1,0 +1,36 @@
+name: nyc_congestion_pricing
+version: "1.0.0"
+config-version: 2
+profile: nyc_congestion_pricing
+
+model-paths: ["models"]
+seed-paths: ["seeds"]
+test-paths: ["tests"]
+macro-paths: ["macros"]
+
+vars:
+  # Where the landed parquet files are. CI overrides this with the small committed sample.
+  landing_glob: "data/landing/*.parquet"
+  # Every season is lined up on the 2024-25 calendar by shifting whole years of 364 days.
+  # These are the Mondays (on that calendar) of the first and last week every season covers in full.
+  first_week: "2024-10-07"
+  last_week: "2025-06-16"
+  # The toll started Sunday 5 Jan 2025. The week containing it is neither before nor after.
+  transition_week: "2024-12-30"
+  # Season whose trip mix is held fixed for the mix-adjusted speed.
+  baseline_season: 2023
+  # A service / zone pair / time-of-day cell needs this many timed trips in the baseline season to get a weight.
+  min_baseline_trips: 200
+
+seeds:
+  nyc_congestion_pricing:
+    +quote_columns: false
+
+models:
+  nyc_congestion_pricing:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: table
+    marts:
+      +materialized: table
