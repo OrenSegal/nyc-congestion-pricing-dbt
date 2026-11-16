@@ -14,5 +14,6 @@ jobs:
           python-version: "3.12"
       - run: pip install -r requirements.txt
       # Runs every model and test on the committed sample (24 zones, all weeks).
-      - run: dbt build --vars '{landing_glob: fixtures/weekly_od_sample.parquet, min_baseline_trips: 50}'
+      - run: |
+          dbt build --vars '{landing_glob: fixtures/weekly_od_sample.parquet, min_baseline_trips: 50}'
       - run: python experiment/analyze.py --check
