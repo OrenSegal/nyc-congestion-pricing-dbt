@@ -49,7 +49,7 @@ The placebo is 51% the size of the toll-year estimate, just over the 50% line, s
 
 **Checks** (full tables in [`experiment/results.md`](experiment/results.md)):
 
-- **Peak against overnight.** The toll applies in peak hours only. Peak speed rose 4.0% (placebo 1.4%); overnight, which pays no toll, rose 2.0% (placebo 3.0%). Peak up more than overnight is what a real toll effect would look like, but the intervals overlap, so it is a hint, not a result.
+- **Peak against overnight.** Cars pay $9 in peak hours and $2.25 overnight, so a traffic effect should be larger at peak. Peak speed rose 4.0% (placebo 1.4%); overnight, where the toll is a quarter of the peak rate, rose 2.0% (placebo 3.0%). Peak up more than overnight is what a real toll effect would look like, but the intervals overlap, so it is a hint, not a result.
 - **Number of trips.** Inside the zone +0.6% (CI -2.9% to +4.2%; placebo +2.4%). Into or out of the zone -0.5% (CI -3.2% to +2.2%). Nothing detectable, and the intervals are wide enough that a change of a few percent would not show.
 - **Spillover.** Manhattan outside the zone: speed +1.0%, trips -0.8%, both within noise of zero and of the placebo.
 - **Sensitivity.** Without mix adjustment +3.6%; Uber/Lyft only +3.0% (placebo +1.5%); yellow taxi only +4.7% (placebo -0.5%). Same direction every time, same size of placebo problem for the main cuts.
